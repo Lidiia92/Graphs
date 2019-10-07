@@ -48,7 +48,7 @@ class Graph:
                 #print(vertex)
                 for neighbor in self.vertices[vertex]:
                     queue.enqueue(neighbor)
-        print(visited)
+        print('BFT', visited)
 
 
     def dft(self, starting_vertex):
@@ -67,15 +67,25 @@ class Graph:
                 #print(vertex)
                 for neighbor in self.vertices[vertex]:
                     stack.push(neighbor)
-        print(visited)
+        print('DFT', visited)
 
-    def dft_recursive(self, starting_vertex):
+    def dft_recursive(self, starting_vertex, visited=False):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         This should be done using recursion.
         """
-        pass  # TODO
+        if not visited:
+            visited = []
+
+        visited.append(starting_vertex)
+        print('VERTEX', starting_vertex)
+
+        for vertex in self.vertices[starting_vertex]:
+            if vertex not in visited:
+                self.dft_recursive(vertex, visited)
+
+
     def bfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing the shortest path from
