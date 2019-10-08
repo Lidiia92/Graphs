@@ -42,7 +42,39 @@ class Graph:
             # self.vertices[v2].add(v1)
 
 
-
+#ancestors = [(1, 3), (2, 3), (3, 6), (5, 6), (5, 7), (4, 5), (4, 8), (8, 9), (11, 8), (10, 1)]
 
 def earliest_ancestor(ancestors, starting_node):
-    pass
+    
+    graph = Graph()
+
+    for pair in ancestors:
+        graph.add_vertex(pair[0])
+        graph.add_vertex(pair[1])
+
+        #Child --> Parent edges
+
+        graph.add_edge(pair[1], pair[0])
+
+    queue = Queue()
+    queue.enqueue([starting_node])
+
+    path_length = 1
+    earliest_ancestor = -1
+
+    while queue.size() > 0:
+        shortest_path = queue.dequeue()
+        vertex = shortest_path[-1]
+
+        if len(shortest_path) > path_length or (len(shortest_path) == path_length and vertex < earliest_ancestor):
+
+            earliest_ancestor = vertex
+            path_length = len(shortest_path)
+
+        
+        for neighbor in graph.vertices[vertex]:
+            shortest_path_copy = list(shortest_path)
+            shortest_path_copy.append(neighbor)
+            queue.enqueue(shortest_path_copy)
+
+    return earliest_ancestor
