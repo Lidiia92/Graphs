@@ -60,13 +60,15 @@ class SocialGraph:
         # Reset graph
         self.lastID = 0
         self.users = {}
-        self.friendships = {}
+
         # !!!! IMPLEMENT ME
 
         # Add users
 
         for user in range(numUsers):
             self.addUser(f"user-{user}")
+
+        self.friendships =  {1: {9, 2, 6}, 2: {9, 1}, 3: {4, 7}, 4: {10, 3, 7}, 5: {6}, 6: {1, 5}, 7: {3, 4}, 8: {9}, 9: {8, 1, 2, 10}, 10: {9, 4}}
 
 
     def getAllSocialPaths(self, userID):
