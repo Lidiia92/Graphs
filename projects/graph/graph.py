@@ -7,49 +7,147 @@ class Graph:
     """Represent a graph as a dictionary of vertices mapping labels to edges."""
     def __init__(self):
         self.vertices = {}
+
+
     def add_vertex(self, vertex):
         """
         Add a vertex to the graph.
         """
-        pass  # TODO
+        if vertex not in self.vertices:
+            self.vertices[vertex] = set()
+        else:
+            print("VERTEX ALREADY EXISTS")
+
+
+
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
         """
-        pass  # TODO
+        if v1 not in self.vertices or v2 not in self.vertices:
+            print("VERTEX DOES NOT EXIST")
+        else:
+            #Setting direction from v1 to v2
+            self.vertices[v1].add(v2)
+            # self.vertices[v2].add(v1)
+
+
     def bft(self, starting_vertex):
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        visited = []
+        queue = Queue()
+
+        queue.enqueue(starting_vertex)
+        while queue.size() > 0:
+            vertex = queue.dequeue()
+            if vertex not in visited:
+                visited.append(vertex)
+                #print(vertex)
+                for neighbor in self.vertices[vertex]:
+                    queue.enqueue(neighbor)
+        print('BFT', visited)
+
+
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
-    def dft_recursive(self, starting_vertex):
+        
+        visited = []
+        stack = Stack()
+        stack.push(starting_vertex)
+        while stack.size() > 0:
+            vertex = stack.pop()
+            if vertex not in visited:
+                visited.append(vertex)
+                #print(vertex)
+                for neighbor in self.vertices[vertex]:
+                    stack.push(neighbor)
+        print('DFT', visited)
+
+    def dft_recursive(self, starting_vertex, visited=False):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         This should be done using recursion.
         """
-        pass  # TODO
+        if not visited:
+            visited = []
+
+        visited.append(starting_vertex)
+        print('VERTEX', starting_vertex)
+
+        for vertex in self.vertices[starting_vertex]:
+            if vertex not in visited:
+                self.dft_recursive(vertex, visited)
+
+
     def bfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing the shortest path from
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        
+
+        visited = []
+        queue = Queue()
+        queue.enqueue([starting_vertex])
+
+
+        while queue.size() > 0:
+            shortest_path = queue.dequeue()
+            vertex = shortest_path[-1]
+
+            if vertex not in visited:
+
+                if vertex is destination_vertex:
+                    print("BFS")
+                    return shortest_path
+
+                visited.append(vertex)
+
+                for neighbor in self.vertices[vertex]:
+                    new_shortest_path = list(shortest_path)
+                    new_shortest_path.append(neighbor)
+                    queue.enqueue(new_shortest_path)
+        
+        return None
+
+
     def dfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        visited = []
+        stack = Stack()
+        stack.push([starting_vertex])
+
+
+        while stack.size() > 0:
+            shortest_path = stack.pop()
+            vertex = shortest_path[-1]
+
+            if vertex not in visited:
+
+                if vertex is destination_vertex:
+                    print("DFS")
+                    return shortest_path
+
+                visited.append(vertex)
+
+                for neighbor in self.vertices[vertex]:
+                    new_shortest_path = list(shortest_path)
+                    new_shortest_path.append(neighbor)
+                    stack.push(new_shortest_path)
+        
+        return None
 
 
 
